@@ -1,0 +1,59 @@
+<template>
+    <lightning-card>
+        <div class="slds-var-p-around_medium">
+                <lightning-input type="search" onchange={searchHandler} label="Search Movies" value={searchKey}>
+                </lightning-input>
+            <div class="below-search-bar">
+                <template if:true={searchMovies}>
+                    <template for:each={searchMovies} for:item="movie">
+                        <div class="slds-box slds-box_small search-flex-container search-results" key={movie.Id} data-movieid={movie.Id} onclick={viewMovieDetails}>
+                            <img src={movie.Poster_Image__c} alt={movie.Name}>
+                            <div class="search-flex-details">
+                                <div><strong>Name - </strong>{movie.Name}</div>
+                                <div class="search-genre"><strong>Genre - </strong><span
+                                        class="slds-badge">{movie.Genre__c}</span></div>
+                                <div><strong>Rating - </strong>{movie.Rating__c}</div>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </div>
+
+
+        <h1 class="movie-catagory">Now Showing</h1>
+        <div class="slds-var-p-around_small">
+            <lightning-layout multiple-rows="true">
+                <template if:true={nowShowingMovies}>
+                    <template for:each={nowShowingMovies} for:item="movie">
+                        <lightning-layout-item key={movie.Id} size="2" padding="around-small" flexibility="auto">
+                            <div class="slds-box slds-var-p-around_medium movie-card">
+                                <img src={movie.Poster_Image__c} alt={movie.Name}>
+                                <h3 class="slds-var-m-top_medium"><strong class="movie-name">{movie.Name}</strong></h3>
+                                <p class="slds-var-m-top_x-small slds-badge">{movie.Genre__c}</p>
+                                <lightning-button class="slds-m-top_xx-small" variant="brand" label="View Details" data-movieid={movie.Id} onclick={viewMovieDetails}></lightning-button>
+                            </div>
+                        </lightning-layout-item>
+                    </template>
+                </template>
+            </lightning-layout>
+        </div>
+        <h1 class="movie-catagory">Upcoming Releases</h1>
+        <div class="slds-var-p-around_small">
+            <lightning-layout multiple-rows="true">
+                <template if:true={upcomingMovies}>
+                    <template for:each={upcomingMovies} for:item="movie">
+                        <lightning-layout-item key={movie.Id} size="2" padding="around-small" flexibility="auto">
+                            <div class="slds-box movie-card">
+                                <img src={movie.Poster_Image__c} alt={movie.Name}>
+                                <h3 class="slds-var-m-top_medium"><strong>{movie.Name}</strong></h3>
+                                <p class="slds-var-m-top_small slds-badge">{movie.Genre__c}</p>
+                                <lightning-button class="slds-m-top_xx-small" variant="brand" label="View Details" data-movieid={movie.Id} onclick={viewMovieDetails}></lightning-button>
+                            </div>
+                        </lightning-layout-item>
+                    </template>
+                </template>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>

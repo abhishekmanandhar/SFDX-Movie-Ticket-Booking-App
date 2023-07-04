@@ -1,0 +1,42 @@
+<template>
+    <div class="movie-detail-flex">
+        <div class="details-card">
+            <lightning-card title="Movie Details">
+                <div class="flex-container">
+                    <img src={moviePosterImage} alt={movieName} class="movie-details-img">
+                    <div class="flex-items">
+                        <h1>{movieName}</h1>
+                        <lightning-badge label="HD" class="slds-m-vertical_small"></lightning-badge>
+                        <p>{movieDescription}</p>
+                        <p><strong>Genre: </strong>{movieGenre}</p>
+                        <p><strong>Duration: </strong>{movieDuration} minutes</p>
+                        <p><strong>Rating: </strong>{movieRating}</p>
+                        <p><strong>Release Date: </strong>{movieReleaseDate}</p>
+                        <p><strong>Director: </strong>{movieDirector}</p>
+                        <p><strong>Cast: </strong>{movieCast}</p>
+                    </div>
+                </div>
+            </lightning-card>
+        </div>
+        <div class="showtime-card">
+            <lightning-card title="Showtimes">
+                <lightning-layout multiple-rows="true">
+                    <template if:true={movieShowtimes}>
+                        <template for:each={movieShowtimes} for:item="showtime">
+                            <lightning-layout-item key={showtime.fields.Id.value} size="6" padding="around-small" flexibility="auto">
+                                <div class="slds-box slds-var-p-around_medium indi-showtime-box" data-showtimeid={showtime.fields.Id.value} onclick={viewSeatDetails}>
+                                    <div>
+                                        <strong>{showtime.fields.Theater__c.value}</strong>
+                                    </div>
+                                    <div>
+                                        {showtime.fields.Start_Time__c.displayValue} - {showtime.fields.End_Time__c.displayValue}
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                        </template>
+                    </template>
+                </lightning-layout>
+            </lightning-card>
+        </div>
+    </div>
+</template>
