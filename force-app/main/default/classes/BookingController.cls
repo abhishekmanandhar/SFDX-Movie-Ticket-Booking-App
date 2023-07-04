@@ -2,12 +2,11 @@ public with sharing class BookingController {
     @AuraEnabled
     public static Id createBookingRecord(Id showtimeId, Id movieId, List<String> selectedSeats, List<String> selectedSeatsId, List<String> selectedSeatAssign ) {
         Booking__c booking = new Booking__c();
-        // String uniqueName = 'BKG-' + String.valueOf(System.currentTimeMillis());
-        // booking.Name = uniqueName;
         booking.Booking_Status__c = 'Pending';
         booking.Showtime__c = showtimeId;
         booking.Movie__c = movieId;
         booking.Selected_Seats__c = String.join(selectedSeats, ',');
+        booking.Seat_Assignment_Id__c = String.join(selectedSeatAssign, ',');
         booking.Number_of_Seats__c = selectedSeats.size();
 
         insert booking;
@@ -29,6 +28,6 @@ public with sharing class BookingController {
 
     @AuraEnabled(cacheable=true)
     public static Booking__c getBookingDetails(Id bookingId) {
-        return [SELECT Name, Movie__c, Showtime__c, Number_of_seats__c, Selected_Seats__c, Total_Price__c, Ticket_Price__c, Booking_Status__c FROM Booking__c WHERE Id = :bookingId];
+        return [SELECT Name, Movie__c, Showtime__c, Number_of_seats__c, Selected_Seats__c, Seat_Assignment_Id__c, Total_Price__c, Ticket_Price__c, Booking_Status__c FROM Booking__c WHERE Id = :bookingId];
     }
 }

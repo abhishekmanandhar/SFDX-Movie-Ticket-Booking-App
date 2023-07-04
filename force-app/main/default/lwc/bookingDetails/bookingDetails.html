@@ -9,4 +9,29 @@
         <p>Total Price: {totalPrice}</p>
         <p>You will be sent a confirmation mail shortly!</p>
     </lightning-card>
+
+    <lightning-card title="Payment Details">
+        <div class="slds-p-around_medium">
+            <div>
+                <p>Total Price: {totalPrice}</p>
+            </div>
+            <div>
+                <p>Payment Type:</p>
+                <lightning-radio-group
+                    options={paymentTypes}
+                    value={selectedPaymentType}
+                    onchange={handlePaymentTypeChange}
+                ></lightning-radio-group>
+            </div>
+            <div>
+                <p>Discount Amount: {calculateDiscountAmount}</p>
+            </div>
+            <div>
+                <p>Total Payable Amount: {totalPayableAmount}</p>
+            </div>
+            <div>
+                <lightning-button label="Pay Now" onclick={handlePayNow}></lightning-button>
+            </div>
+        </div>
+    </lightning-card>
 </template>
