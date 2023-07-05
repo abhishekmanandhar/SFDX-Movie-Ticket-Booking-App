@@ -1,5 +1,6 @@
 import { LightningElement, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { NavigationMixin } from 'lightning/navigation';
 import getBookingDetails from '@salesforce/apex/BookingController.getBookingDetails';
 import getMovieDetails from '@salesforce/apex/MovieController.getMovieDetails';
 import getShowtimeDetails from '@salesforce/apex/ShowtimeController.getShowtimeDetails';
@@ -10,7 +11,7 @@ import PAYMENT_ID_FIELD from '@salesforce/schema/Payment__c.Id';
 import PAYMENT_TYPE_FIELD from '@salesforce/schema/Payment__c.Payment_Type__c';
 import PAYMENT_STATUS_FIELD from '@salesforce/schema/Payment__c.Payment_Status__c'
 
-export default class BookingDetails extends LightningElement {
+export default class BookingDetails extends NavigationMixin(LightningElement) {
     @api bookingId;
 
     movieId;
@@ -115,11 +116,30 @@ export default class BookingDetails extends LightningElement {
             .then(result => {
                 console.log('success');
                 this.showToast('Success', 'Congratulation! Payment was successful.', 'success')
+                this[NavigationMixin.Navigate]({
+                    type: "standard__recordPage",
+                    attributes: {
+                      objectApiName: "Payment__c",
+                      actionName: "view",
+                      recordId: this.paymentId
+                    }
+                  });
             })
             .catch(error => {
                 console.log('error');
                 this.showToast('Error', error.body.message, 'error');
             });
+    }
+
+    handlePayLater(){
+        this[NavigationMixin.Navigate]({
+            type: "standard__recordPage",
+            attributes: {
+              objectApiName: "Payment__c",
+              actionName: "view",
+              recordId: this.paymentId
+            }
+          });
     }
 
     showToast(title, message, variant) {
