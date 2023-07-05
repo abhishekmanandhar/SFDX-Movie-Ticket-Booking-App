@@ -57,7 +57,7 @@ export default class MovieDetails extends NavigationMixin(LightningElement) {
     @wire(getRelatedListRecords, {
         parentRecordId: '$movieId',
         relatedListId: 'Showtimes__r',
-        fields: ['Showtime__c.Id' ,'Showtime__c.Start_Time__c', 'Showtime__c.Name', 'Showtime__c.End_Time__c', 'Showtime__c.Theater__c' ]
+        fields: ['Showtime__c.Id' ,'Showtime__c.Start_Time__c', 'Showtime__c.Name', 'Showtime__c.End_Time__c', 'Showtime__c.Theater__c', 'Showtime__c.Available_Seats__c' ]
     })
     wireRelatedShotime({error, data}){
         if(data){

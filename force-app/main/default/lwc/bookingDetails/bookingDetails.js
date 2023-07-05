@@ -1,12 +1,14 @@
 import { LightningElement, api, wire } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getBookingDetails from '@salesforce/apex/BookingController.getBookingDetails';
 import getMovieDetails from '@salesforce/apex/MovieController.getMovieDetails';
 import getShowtimeDetails from '@salesforce/apex/ShowtimeController.getShowtimeDetails';
-import { createRecord } from 'lightning/uiRecordApi';
+import getPaymentId from '@salesforce/apex/PaymentController.getPaymentId';
+import { updateRecord } from 'lightning/uiRecordApi';
 import PAYMENT_OBJECT from '@salesforce/schema/Payment__c';
-import BOOKING_FIELD from '@salesforce/schema/Payment__c.Booking__c';
+import PAYMENT_ID_FIELD from '@salesforce/schema/Payment__c.Id';
 import PAYMENT_TYPE_FIELD from '@salesforce/schema/Payment__c.Payment_Type__c';
-import TOTAL_PAYABLE_AMOUNT_FIELD from '@salesforce/schema/Payment__c.Total_Payable_Amount__c';
+import PAYMENT_STATUS_FIELD from '@salesforce/schema/Payment__c.Payment_Status__c'
 
 export default class BookingDetails extends LightningElement {
     @api bookingId;
@@ -22,21 +24,25 @@ export default class BookingDetails extends LightningElement {
     numberOfSeats;
     ticketPrice;
     totalPrice;
-
+    
     bookingDetails;
     movieDetails;
     showtimeDetails;
+    
+    
+    //For Payment
+    selectedPaymentType = '';
+    paymentId;
+    discountAmount;
+    totalPayableAmount;
 
     get paymentTypes() {
         return [
             { label: 'Credit/Debit Card', value: 'Credit/Debit Card' },
-            { label: 'Cash On Delivery', value: 'Cash On Delivery' },
+            { label: 'Mobile Wallet', value: 'Mobile Wallet' },
         ];
     }
-
-    selectedPaymentType = '';
-    totalPayableAmount;
-
+    
     @wire(getBookingDetails, { bookingId: '$bookingId' })
     wiredBookingDetails({ error, data }) {
         if (data) {
@@ -79,6 +85,19 @@ export default class BookingDetails extends LightningElement {
         }
     }
 
+    @wire(getPaymentId, {bookingId: '$bookingId'})
+    wirePaymentId({data, error}) {
+        if(data) {
+            this.paymentId = data.Id;
+            this.discountAmount = data.Discount_Amount__c;
+            this.totalPayableAmount = data.Total_Payable_Amount__c;
+            console.log(data);
+        }
+        else if(error) {
+            console.error(error);
+        }
+    }
+
     handlePaymentTypeChange(event){
         this.selectedPaymentType = event.target.value;
         console.log(this.selectedPaymentType);
@@ -86,18 +105,30 @@ export default class BookingDetails extends LightningElement {
 
     handlePayNow(){
         const fields = {};
-        fields[BOOKING_FIELD.fieldApiName] = this.bookingId;
-        fields[TOTAL_PAYABLE_AMOUNT_FIELD.fieldApiName] = this.totalPayableAmount;
+        fields[PAYMENT_ID_FIELD.fieldApiName] = this.paymentId;
         fields[PAYMENT_TYPE_FIELD.fieldApiName] = this.selectedPaymentType;
+        fields[PAYMENT_STATUS_FIELD.fieldApiName] = 'Paid';
 
-        const paymentRecord = { apiName: PAYMENT_OBJECT.objectApiName, fields };
-        createRecord(paymentRecord)
-        .then(result => {
-            console.log('success')
-        })
-        .catch(error => {
-            console.error(error)
+        const recordInput = { fields };
+
+        updateRecord(recordInput)
+            .then(result => {
+                console.log('success');
+                this.showToast('Success', 'Congratulation! Payment was successful.', 'success')
+            })
+            .catch(error => {
+                console.log('error');
+                this.showToast('Error', error.body.message, 'error');
+            });
+    }
+
+    showToast(title, message, variant) {
+        const toastEvent = new ShowToastEvent({
+            title: title,
+            message: message,
+            variant: variant
         });
+        this.dispatchEvent(toastEvent);
     }
 
     get formattedStartTime() {
@@ -115,30 +146,4 @@ export default class BookingDetails extends LightningElement {
         }
         return '';
     }
-
-    get calculateDiscountAmount() {
-        const discountPercentageSeats = 10; // Discount percentage for the number of seats greater >= 4
-        const discountPercentageSaturday = 50; // Discount percentage for Saturday
-    
-        let discountAmount = 0;
-    
-        // Apply discount based on the number of seats
-        if (this.numberOfSeats >= 4) {
-            const seatsDiscount = (this.totalPrice * discountPercentageSeats) / 100;
-            discountAmount += seatsDiscount;
-        }
-    
-        // Apply discount if it's Saturday
-        // const startDate = new Date(this.starttime);
-        // const isSaturday = startDate.getDay() === 6;
-        // if (isSaturday) {
-        //     const saturdayDiscount = (this.totalPrice * discountPercentageSaturday) / 100;
-        //     discountAmount += saturdayDiscount;
-        // }
-    
-        this.totalPayableAmount = this.totalPrice - discountAmount;
-
-        return discountAmount;
-    }
-    
 }

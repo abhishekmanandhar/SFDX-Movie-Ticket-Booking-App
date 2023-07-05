@@ -3,6 +3,7 @@ import { getRelatedListRecords } from 'lightning/uiRelatedListApi';
 import getShowtimeDetails from '@salesforce/apex/ShowtimeController.getShowtimeDetails';
 import createBookingRecord from '@salesforce/apex/BookingController.createBookingRecord';
 import { NavigationMixin } from 'lightning/navigation';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class SeatDetails extends NavigationMixin(LightningElement) {
     @api showtimeId;
@@ -94,6 +95,7 @@ export default class SeatDetails extends NavigationMixin(LightningElement) {
             selectedSeatAssign: this.selectedSeatAssign
         })
         .then(result => {
+            this.showToast('Success', 'Thank you for booking the ticket. Would you like to Pay now?', 'success')
             this.bookingId = result;
             console.log('Booking created', this.bookingId);
             var definition={
@@ -110,7 +112,17 @@ export default class SeatDetails extends NavigationMixin(LightningElement) {
             });
         })
         .catch(error => {
+            this.showToast('Error', error.body.message, 'error');
             console.error('Error creating booking', error);
         })
+    }
+
+    showToast(title, message, variant) {
+        const toastEvent = new ShowToastEvent({
+            title: title,
+            message: message,
+            variant: variant
+        });
+        this.dispatchEvent(toastEvent);
     }
 }

@@ -1,10 +1,10 @@
-trigger PaymentTrigger on Payment__c (after insert) {
+trigger PaymentTrigger on Payment__c (after update) {
     if(Trigger.isAfter){
-        if(Trigger.isInsert){
+        if(Trigger.isUpdate){
             Set<Id> bookingIds = new Set<Id>();
 
             for (Payment__c payment : Trigger.new) {
-                if (payment.Booking__c != null) {
+                if ((payment.Booking__c != null) && (payment.Payment_Status__c == 'Paid')) {
                     bookingIds.add(payment.Booking__c);
                 }
             }

@@ -19,18 +19,26 @@
 </template> -->
 
 <template>
-    <h1>Seat Selection</h1>
-    <div class="seat-grid">
-        <template for:each={showtimeSeats} for:item="seat">
-            <div key={seat.fields.Seat__c.value}>
-                <template if:true={seat.fields.isReserved__c.value}>
-                    <lightning-input type="checkbox" label={seat.fields.Seat__r.value.fields.Seat_Number__c.value} checked disabled></lightning-input>
-                </template>
-                <template if:false={seat.fields.isReserved__c.value}>
-                    <lightning-input type="checkbox" data-seatassign={seat.fields.Id.value} data-seatid={seat.fields.Seat__c.value} data-seatnumber={seat.fields.Seat__r.value.fields.Seat_Number__c.value} label={seat.fields.Seat__r.value.fields.Seat_Number__c.value} value={seat.fields.Seat__r.value.fields.Seat_Number__c.value} onchange={handleSeatSelection}></lightning-input>
+    <lightning-card title="Seat Selection">
+        <div class="flex-container">
+            <div class="screen">Screen</div>
+            <div class="seat-grid">
+                <template for:each={showtimeSeats} for:item="seat">
+                    <div key={seat.fields.Seat__c.value} class="checkbox">
+                        <template if:true={seat.fields.isReserved__c.value}>
+                            <div class="checked">
+                                <lightning-input type="checkbox" label={seat.fields.Seat__r.value.fields.Seat_Number__c.value} checked disabled></lightning-input>
+                            </div>
+                        </template>
+                        <template if:false={seat.fields.isReserved__c.value}>
+                            <div class="unchecked">
+                                <lightning-input type="checkbox" data-seatassign={seat.fields.Id.value} data-seatid={seat.fields.Seat__c.value} data-seatnumber={seat.fields.Seat__r.value.fields.Seat_Number__c.value} label={seat.fields.Seat__r.value.fields.Seat_Number__c.value} value={seat.fields.Seat__r.value.fields.Seat_Number__c.value} onchange={handleSeatSelection}></lightning-input>
+                            </div>
+                        </template>
+                    </div>
                 </template>
             </div>
-        </template>
-        <button onclick={handleBooking} class="slds-button slds-button_brand">Book Now</button>
-    </div>
+            <button onclick={handleBooking} class="slds-button slds-button_brand">Book Now</button>
+        </div>
+    </lightning-card>
 </template>
