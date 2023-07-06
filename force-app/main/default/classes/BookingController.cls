@@ -23,7 +23,7 @@ public with sharing class BookingController {
         }
         update seatAssignmentsToUpdate;
 
-        Payment__c payment = new Payment__c(Booking__c = booking.Id, Payment_Status__c = 'Unpaid');
+        Payment__c payment = new Payment__c(Booking__c = booking.Id, Payment_Status__c = 'In Progress');
         insert payment;
 
         return booking.Id;

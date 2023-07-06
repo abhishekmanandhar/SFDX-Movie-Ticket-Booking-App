@@ -11,4 +11,15 @@ public with sharing class PaymentController {
             throw new AuraHandledException(e.getMessage());
         }
     }
+
+    // @AuraEnabled(cacheable=true)
+    // public static Id createPaymentRecord(Id bookingId){
+    //     try {
+    //         Payment__c payment = new Payment__c(Booking__c = bookingId, Payment_Status__c = 'Unpaid');
+    //         insert payment;
+    //         return payment.Id;
+    //     } catch (Exception e) {
+    //         throw new AuraHandledException(e.getMessage());
+    //     }
+    // }
 }

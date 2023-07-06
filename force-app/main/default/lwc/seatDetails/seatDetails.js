@@ -112,6 +112,7 @@ export default class SeatDetails extends NavigationMixin(LightningElement) {
             });
         })
         .catch(error => {
+            // this.showToast('Maximum of 10 Seats of Hold limit crossed. You have to pay right away, you cannot put seats on hold', error.body.pageErrors.message, 'error');
             this.showToast('Error', error.body.message, 'error');
             console.error('Error creating booking', error);
         })
