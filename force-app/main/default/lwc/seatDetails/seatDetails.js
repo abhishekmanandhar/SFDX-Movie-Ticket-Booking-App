@@ -31,6 +31,7 @@ export default class SeatDetails extends NavigationMixin(LightningElement) {
     @wire(getRelatedListRecords, {
         parentRecordId: '$showtimeId',
         relatedListId: 'Seat_Assignments__r',
+        pageSize: 100,
         fields: ['Seat_Assignment__c.Id' ,'Seat_Assignment__c.Name', 'Seat_Assignment__c.Showtime__c', 'Seat_Assignment__c.Seat__c', 'Seat_Assignment__c.Availability_Status__c', 'Seat_Assignment__c.isReserved__c', 'Seat_Assignment__c.Seat__r.Name', 'Seat_Assignment__c.Seat__r.Seat_Row__c', 'Seat_Assignment__c.Seat__r.Seat_Number__c', 'Seat_Assignment__c.Seat__r.Seat_Column__c',]
     })
     wireRelatedSeat({ error, data }) {
