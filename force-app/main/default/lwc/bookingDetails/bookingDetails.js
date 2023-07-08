@@ -128,7 +128,7 @@ export default class BookingDetails extends NavigationMixin(LightningElement) {
         updateRecord(recordInput)
             .then(result => {
                 console.log('success');
-                this.showToast('Success', 'Congratulation! Payment was successful.', 'success')
+                this.showToast('Success', 'Congratulation! Payment was successful. Check your mail for the ticket details!', 'success')
                 this[NavigationMixin.Navigate]({
                     type: "standard__recordPage",
                     attributes: {
@@ -136,7 +136,7 @@ export default class BookingDetails extends NavigationMixin(LightningElement) {
                       actionName: "view",
                       recordId: this.paymentId
                     }
-                  });
+                  });   
             })
             .catch(error => {
                 console.log('error');

@@ -35,7 +35,7 @@ export default class SeatDetails extends NavigationMixin(LightningElement) {
     })
     wireRelatedSeat({ error, data }) {
         if (data) {
-            this.showtimeSeats = data.records
+            this.showtimeSeats = data.records;
             console.log(this.showtimeSeats);
         } else if (error) {
             console.error(error);
