@@ -4,7 +4,7 @@ trigger PaymentTrigger on Payment__c (after update) {
             Set<Id> bookingIds = new Set<Id>();
 
             for (Payment__c payment : Trigger.new) {
-                if ((payment.Booking__c != null) && (payment.Payment_Status__c == 'Paid')) {
+                if ((payment.Booking__c != null) && (payment.Payment_Status__c == 'Paid') && payment.Cancellation_Approval_Requested__c == false) {
                     bookingIds.add(payment.Booking__c);
                 }
             }
