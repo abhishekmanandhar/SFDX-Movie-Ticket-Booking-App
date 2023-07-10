@@ -3,15 +3,11 @@ public with sharing class PaymentControllerTest {
     @isTest
     static void testGetPaymentId(){
         //creating test data
-        Booking__c booking = new Booking__c(Booking_Status__c = 'Pending', Number_of_Seats__c = 5);
-        insert booking;
-
-        Payment__c payment = new Payment__c(Booking__c = booking.Id);
-        insert payment;
+        Id bookingId = TestUtility.createBookingWithPayment();
 
         //calling the apex class
         Test.startTest();
-        Payment__c result = PaymentController.getPaymentId(booking.Id);
+        Payment__c result = PaymentController.getPaymentId(bookingId);
         Test.stopTest();
 
         //asserting the result
@@ -21,8 +17,7 @@ public with sharing class PaymentControllerTest {
     @isTest
     static void testGetPaymentIdNull(){
         //creating test data
-        Booking__c booking = new Booking__c(Booking_Status__c = 'Pending', Number_of_Seats__c = 5);
-        insert booking;
+        Id bookingId = TestUtility.createBookingWithPayment();
         
         //calling the apex class
         Test.startTest();

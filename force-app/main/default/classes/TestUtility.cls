@@ -16,4 +16,31 @@ public class TestUtility {
         System.assertEquals(expectedGenre, movie.Genre__c);
         System.assertEquals(expectedRating, movie.Rating__c);
     }
+
+    public static Id createShowtimeForMovie(){
+        Movie__c movie = new Movie__c(Name = 'Movie 1');
+        insert movie;
+
+        Showtime__c showtime = new Showtime__c(Start_Time__c = Date.today()+7, Theater__c = 'Theater 1', Movie__c = movie.Id);
+        insert showtime;
+
+        return showtime.Id;
+    }
+
+    public static Id createBookingWithPayment(){
+        Booking__c booking = new Booking__c(Booking_Status__c = 'Pending', Number_of_Seats__c = 5);
+        insert booking;
+
+        Payment__c payment = new Payment__c(Booking__c = booking.Id);
+        insert payment;
+
+        return booking.Id;
+    }
+
+    public static Id createBookingWihoutPayment(){
+        Booking__c booking = new Booking__c(Booking_Status__c = 'Pending', Number_of_Seats__c = 5);
+        insert booking;
+
+        return booking.Id;
+    }
 }
