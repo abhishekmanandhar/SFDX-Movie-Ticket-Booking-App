@@ -3,14 +3,14 @@ public with sharing class ShowtimeControllerTest {
     @isTest
     static void testGetShowtimes() {
         //creating test data
-        Id showtimeId = TestUtility.createShowtimeForMovie();
+        List<Id> Ids = TestUtility.createShowtimeForMovie();
 
         //calling the apex class
         Test.startTest();
-        Showtime__c result = ShowtimeController.getShowtimeDetails(showtimeId);
+        Showtime__c result = ShowtimeController.getShowtimeDetails(Ids[1]);
         Test.stopTest();
 
         //verifying the result
-        System.assertEquals(showtime.Id, result.Id);
+        System.assertEquals(Ids[1], result.Id);
     }
 }

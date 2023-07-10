@@ -3,25 +3,25 @@ public with sharing class PaymentControllerTest {
     @isTest
     static void testGetPaymentId(){
         //creating test data
-        Id bookingId = TestUtility.createBookingWithPayment();
+        List<Id> Ids = TestUtility.createBookingWithPayment();
 
         //calling the apex class
         Test.startTest();
-        Payment__c result = PaymentController.getPaymentId(bookingId);
+        Payment__c result = PaymentController.getPaymentId(Ids[0]);
         Test.stopTest();
 
         //asserting the result
-        System.assertEquals(payment.Id, result.Id);
+        System.assertEquals(Ids[1], result.Id);
     }
     
     @isTest
     static void testGetPaymentIdNull(){
         //creating test data
-        Id bookingId = TestUtility.createBookingWithPayment();
+        Id bookingId = TestUtility.createBookingWihoutPayment();
         
         //calling the apex class
         Test.startTest();
-        Payment__c result = PaymentController.getPaymentId(booking.Id);
+        Payment__c result = PaymentController.getPaymentId(bookingId);
         Test.stopTest();
 
         //asserting the result

@@ -17,24 +17,32 @@ public class TestUtility {
         System.assertEquals(expectedRating, movie.Rating__c);
     }
 
-    public static Id createShowtimeForMovie(){
+    public static List<Id> createShowtimeForMovie(){
         Movie__c movie = new Movie__c(Name = 'Movie 1');
         insert movie;
 
         Showtime__c showtime = new Showtime__c(Start_Time__c = Date.today()+7, Theater__c = 'Theater 1', Movie__c = movie.Id);
         insert showtime;
-
-        return showtime.Id;
+        
+        List<Id> Ids = new List<Id>();
+        Ids.add(movie.Id);
+        Ids.add(showtime.Id);
+    
+        return Ids;
     }
 
-    public static Id createBookingWithPayment(){
+    public static List<Id> createBookingWithPayment(){
         Booking__c booking = new Booking__c(Booking_Status__c = 'Pending', Number_of_Seats__c = 5);
         insert booking;
 
         Payment__c payment = new Payment__c(Booking__c = booking.Id);
         insert payment;
 
-        return booking.Id;
+        List<Id> Ids = new List<Id>();
+        Ids.add(booking.Id);
+        Ids.add(payment.Id);
+
+        return Ids;
     }
 
     public static Id createBookingWihoutPayment(){
