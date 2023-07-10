@@ -61,3 +61,42 @@
     margin: 10px 0;
 }
 
+.flex-footer{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    padding: 20px;
+}
+
+.flex-footer-status{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 30%;
+}
+
+.indi-flex-footer-status{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    /* width: 50%; */
+    gap: 10px;
+}
+
+.color-code{
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+}
+
+.available{
+    background-color: #8693ff;
+}
+
+.reserved{
+    background-color: rgb(201, 201, 201);
+}

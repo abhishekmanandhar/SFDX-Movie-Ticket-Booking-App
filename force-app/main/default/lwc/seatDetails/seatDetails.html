@@ -38,7 +38,15 @@
                     </div>
                 </template>
             </div>
-            <button onclick={handleBooking} class="slds-button slds-button_brand">Book Now</button>
+            <div class="flex-footer">
+                <div class="flex-footer-status">
+                    <div class="indi-flex-footer-status"><div class="color-code available"></div>Available</div>
+                    <div class="indi-flex-footer-status"><div class="color-code reserved"></div>Reserved or On Hold</div>
+                </div>
+                <div>
+                    <button onclick={handleBooking} class="slds-button slds-button_brand">Book Now</button>
+                </div>
+            </div>
         </div>
     </lightning-card>
 </template>
