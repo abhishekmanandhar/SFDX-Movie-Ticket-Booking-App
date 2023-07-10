@@ -1,38 +1,48 @@
 <template>
-    <lightning-card title="Booking Details">
-        <p>Booking Name: {bookingName}</p>
-        <p>Movie: {movieName}</p>
-        <p>Showtime: {formattedStartTime}, {theaterName} </p>
-        <p>Seat: {selectedSeats}</p>
-        <p>Number of Seats: {numberOfSeats}</p>
-        <p>Ticket Price: {ticketPrice}</p>
-        <p>Total Price: {totalPrice}</p>
-        <p>You will be sent a confirmation mail shortly!</p>
-    </lightning-card>
-
-    <lightning-card title="Payment Details">
-        <div class="slds-p-around_medium">
-            <div>
-                <p>Total Price: {totalPrice}</p>
-            </div>
-            <div>
-                <p>Payment Type:</p>
-                <lightning-radio-group
-                    options={paymentTypes}
-                    value={selectedPaymentType}
-                    onchange={handlePaymentTypeChange}
-                ></lightning-radio-group>
-            </div>
-            <div>
-                <p>Discount Amount: {discountAmount}</p>
-            </div>
-            <div>
-                <p>Total Payable Amount: {totalPayableAmount}</p>
-            </div>
-            <div>
-                <lightning-button label="Pay Now" onclick={handlePayNow}></lightning-button>
-                <lightning-button label="Pay Later" onclick={handlePayLater}></lightning-button>
-            </div>
+    <div class="flex-container">
+        <div class="booking-details-card">
+            <lightning-card title="Booking Details">
+                <div class="flex-center">
+                    <div class="booking-details-flex">
+                        <div class="poster-image">
+                            <img src={posterImage} alt={movieName}>
+                        </div>
+                        <div class="booking-details-content">
+                            <p>Booking Name: {bookingName}</p>
+                            <p>Movie: {movieName}</p>
+                            <p>Showtime: {formattedStartTime}, {theaterName} </p>
+                            <p>Seat: {selectedSeats}</p>
+                            <p>Number of Seats: {numberOfSeats}</p>
+                            <p>Ticket Price: {ticketPrice}</p>
+                            <p>Total Price: {totalPrice}</p>
+                        </div>
+                    </div>
+                </div>
+            </lightning-card>
         </div>
-    </lightning-card>
+        <div class="payment-details-card">
+            <lightning-card title="Payment Details">
+                <div class="slds-p-around_medium">
+                    <div>
+                        <p>Total Price: {totalPrice}</p>
+                    </div>
+                    <div>
+                        <p>Payment Type:</p>
+                        <lightning-radio-group options={paymentTypes} value={selectedPaymentType}
+                            onchange={handlePaymentTypeChange}></lightning-radio-group>
+                    </div>
+                    <div>
+                        <p>Discount Amount: {discountAmount}</p>
+                    </div>
+                    <div>
+                        <p>Total Payable Amount: {totalPayableAmount}</p>
+                    </div>
+                    <div>
+                        <lightning-button label="Pay Now" onclick={handlePayNow}></lightning-button>
+                        <lightning-button label="Pay Later" onclick={handlePayLater}></lightning-button>
+                    </div>
+                </div>
+            </lightning-card>
+        </div>
+    </div>
 </template>

@@ -19,6 +19,7 @@ export default class BookingDetails extends NavigationMixin(LightningElement) {
     showtimeId;
     bookingName;
     movieName;
+    posterImage;
     showtimeName;
     starttime;
     theaterName;
@@ -79,6 +80,7 @@ export default class BookingDetails extends NavigationMixin(LightningElement) {
         if (data) {
             this.movieDetails = data;
             this.movieName = this.movieDetails.Name;
+            this.posterImage = this.movieDetails.Poster_Image__c;
             console.log(this.movieDetails);
         } else if (error) {
             console.error(error);

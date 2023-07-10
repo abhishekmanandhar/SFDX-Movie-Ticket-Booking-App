@@ -1,0 +1,62 @@
+.flex-container{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.booking-details-card{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: flex-start;
+    width: 50%;
+    height: 100%;
+}
+
+.flex-center{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0px;
+}
+
+.booking-details-flex{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-content: center;
+    width: 85%;
+    gap: 20px;
+}
+
+.booking-details-flex .poster-image{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-content: center;
+}
+
+.booking-details-flex .poster-image img{
+    width: 45%;
+    height: 50%;
+    border-radius: 5px;
+}
+
+.booking-details-content{
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    background-image: linear-gradient(#ccd2ff 35%, white 96%);
+    padding: 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.payment-details-card{
+    width: 50%;
+    height: 100%;
+}
