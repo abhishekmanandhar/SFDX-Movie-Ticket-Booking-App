@@ -154,9 +154,9 @@ export default class BookingDetails extends NavigationMixin(LightningElement) {
 
         const recordInput = { fields };
 
-        console.log(this.seatsOnHold + this.numberOfSeats);
+        console.log(this.seatsOnHold);
         
-        if(this.seatsOnHold + this.numberOfSeats <= 10){
+        if(this.seatsOnHold <= 10){
             updateRecord(recordInput)
                 .then(result => {
                     console.log('success');

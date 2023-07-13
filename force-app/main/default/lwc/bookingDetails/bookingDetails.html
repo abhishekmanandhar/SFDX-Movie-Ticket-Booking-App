@@ -8,12 +8,16 @@
                             <img src={posterImage} alt={movieName}>
                         </div>
                         <div class="booking-details-content">
-                            <p>Booking Name: {bookingName}</p>
-                            <p>Movie: {movieName}</p>
-                            <p>Showtime: {formattedStartTime}, {theaterName} </p>
-                            <p>Seat: {selectedSeats}</p>
-                            <p>Number of Seats: {numberOfSeats}</p>
-                            <p>Ticket Price: {ticketPrice}</p>
+                            <div class="booking-detail-content-left">
+                                <p>Booking Name: {bookingName}</p>
+                                <p>Movie: {movieName}</p>
+                                <p>Showtime: {formattedStartTime}, {theaterName} </p>
+                            </div>
+                            <div class="booking-details-content-right">
+                                <p>Seat: {selectedSeats}</p>
+                                <p>Number of Seats: {numberOfSeats}</p>
+                                <p>Ticket Price: {ticketPrice}</p>
+                            </div>
                             <p>Total Price: {totalPrice}</p>
                         </div>
                     </div>
