@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Mail_Including_the_Booking_Details</name>
+        <label>Send Mail Including the Booking Details</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.CreatedBy.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Movie Ticket Booking Confirmed</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>Email_Body</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <environments>Default</environments>
+    <interviewLabel>Send an Email for Ticket Booking Confirmation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Send an Email for Ticket Booking Confirmation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Send_Mail_Including_the_Booking_Details</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Payment_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Paid</stringValue>
+            </value>
+        </filters>
+        <object>Payment__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>Email_Body</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Greeting! {!$Record.CreatedBy.FirstName}&lt;/p&gt;&lt;p&gt;Your payment for booking movie tickets was successful.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Movie Name:&lt;/strong&gt; {!$Record.Booking__r.Showtime__r.Movie__r.Name}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Selected Seats: &lt;/strong&gt;{!$Record.Booking__r.Selected_Seats__c}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Showtime:&lt;/strong&gt; {!$Record.Booking__r.Showtime__r.Start_Time__c}, {!$Record.Booking__r.Showtime__r.Theater__c}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Paid Amount:&lt;/strong&gt; {!$Record.Total_Payable_Amount__c}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Payment Method: &lt;/strong&gt;{!$Record.Payment_Type__c}&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Status:&lt;/strong&gt; {!$Record.Booking__r.Booking_Status__c}&lt;/p&gt;&lt;p&gt;Enjoy your time watching the movie.&lt;/p&gt;&lt;p&gt;Thank you!&lt;/p&gt;</text>
+    </textTemplates>
+</Flow>
